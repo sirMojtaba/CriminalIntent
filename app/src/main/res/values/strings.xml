@@ -13,5 +13,8 @@
     <string name="show_subtitle">Show Subtitle</string>
     <string name="hide_subtitle">Hide Subtitle</string>
     <string name="subtitle_format">%1$d crimes</string>
+    <string name="delete_crime">delete crime</string>
+    <string name="add_new_crime">Add new crime</string>
+    <string name="button_add_new_crime">add new crime</string>
 
 </resources>

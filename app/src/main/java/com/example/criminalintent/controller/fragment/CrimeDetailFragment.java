@@ -7,6 +7,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -52,6 +55,7 @@ public class CrimeDetailFragment extends Fragment {
      * Using factory pattern to create this fragment. every class that want
      * to create this fragment should always call this method "only".
      * no class should call constructor any more.
+     *
      * @param crimeId this fragment need crime id to work properly.
      * @return new CrimeDetailFragment
      */
@@ -71,6 +75,7 @@ public class CrimeDetailFragment extends Fragment {
         Log.d(TAG, "onCreate");
 
         mRepository = CrimeRepository.getInstance();
+        setHasOptionsMenu(true);
 
         //This is very very wrong: this is memory of hosted activity
         //UUID crimeId = (UUID) getActivity().getIntent().getSerializableExtra(CrimeDetailActivity.EXTRA_CRIME_ID);
@@ -95,6 +100,21 @@ public class CrimeDetailFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_crime_detail, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu_item_delete_crime) {
+            mRepository.delete(mCrime);
+            getActivity().finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
@@ -104,8 +124,6 @@ public class CrimeDetailFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-
-        updateCrime();
     }
 
     private void findViews(View view) {
